@@ -1,0 +1,122 @@
+import time
+#Any live cell with fewer than two live neighbours dies, as if by underpopulation.
+#Any live cell with two or three live neighbours lives on to the next generation.
+#Any live cell with more than three live neighbours dies, as if by overpopulation.
+#Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+game=[]
+for i in range(30):
+  new=[]
+  for i in range(60):
+    new.append(False)
+  game.append(new)
+#print(game)
+
+f=open("design.in","r")
+o=f.readlines()
+f.close()
+alive=[]
+for i in range(len(o)):
+  o[i]=[int(line) for line in o[i].split()]
+  alive.append(o[i])
+
+for i in alive:
+  game[i[0]][i[1]]=True
+
+def Symbol(game):
+  for i in game:
+    for j in i:
+      if j:
+        print("O",end="")
+      else:
+        print("-",end="")
+    print("")
+
+#Symbol(game)
+
+def Rules(game,cell,x,y):
+  neighbor=0
+  if ((x-1>0) and (y-1)>0) and game[x-1][y-1]:
+    neighbor+=1
+  if (x-1)>=0 and game[x-1][y]:
+    neighbor+=1
+  if y+1 < len(game[0]) and x-1 >= 0 and game[x-1][y+1]:
+    neighbor += 1
+  if y-1 >= 0 and game[x][y-1]:
+    neighbor += 1
+  if y+1 < len(game[0]) and game[x][y+1]:
+    neighbor+=1
+  if y-1 >= 0 and x+1<len(game) and game[x+1][y-1]:
+    neighbor += 1
+  if x+1 < len(game) and game[x+1][y]:
+    neighbor += 1
+  if y+1 < len(game[0]) and x+1 < len(game) and game[x+1][y+1]:
+    neighbor += 1
+  if cell and neighbor<2:
+    return False
+  elif cell and neighbor<4:
+    return True
+  elif cell and neighbor>3:
+    return False
+  if cell==False and neighbor==3:
+    return True
+  
+print("Welcome to Conway's Game of Life. We start with a 30x60 grid of cells, either alive or dead. Here are the rules:\n  1)Any live cell with fewer than two live neighbours dies, as if by underpopulation.\n  2)Any live cell with two or three live neighbours lives on to the next generation.\n  3)Any live cell with more than three live neighbours dies, as if by overpopulation.\n  4)Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.")
+input("Press Enter to continue: ")
+while True:
+  newgame=[]
+  for i in range(30):
+    newlist=[]
+    for j in range(60):
+      newlist.append(False)
+    newgame.append(newlist)
+  for k in range(len(game)):
+    for l in range(len(game[k])):
+      newgame[k][l]=Rules(game,game[k][l],k,l)
+  Symbol(newgame)
+  game=newgame
+  time.sleep(0.5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Any live cell with fewer than two live neighbours dies, as if by underpopulation.""\n"" 
+#Any live cell with two or three live neighbours lives on to the next generation.
+#Any live cell with more than three live neighbours dies, as if by overpopulation.
+#Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+
+
+
+
+
+
+
+
+
+
+
